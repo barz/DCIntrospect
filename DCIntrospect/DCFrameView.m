@@ -5,6 +5,7 @@
 //
 
 #import "DCFrameView.h"
+#import "NSString+BZExtensions.h" // Hsoi 2013-08-19 - our own shim, for now.
 
 @implementation DCFrameView
 
@@ -22,7 +23,7 @@
 		self.touchPointLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		self.touchPointLabel.text = @"X 320 Y 480";
 		self.touchPointLabel.font = [UIFont boldSystemFontOfSize:12.0f];
-		self.touchPointLabel.textAlignment = UITextAlignmentCenter;
+		self.touchPointLabel.textAlignment = NSTextAlignmentCenter;
 		self.touchPointLabel.textColor = [UIColor whiteColor];
 		self.touchPointLabel.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.65f];
 		self.touchPointLabel.layer.cornerRadius = 5.5f;
@@ -116,8 +117,8 @@
 	CGContextStrokePath(context);
 
 	NSString *leftDistanceString = (showAntialiasingWarning) ? [NSString stringWithFormat:@"%.1f", CGRectGetMinX(mainRectOffset)] : [NSString stringWithFormat:@"%.0f", CGRectGetMinX(mainRectOffset)];
-	CGSize leftDistanceStringSize = [leftDistanceString sizeWithFont:font];
-	[leftDistanceString drawInRect:CGRectMake(CGRectGetMinX(self.superRect) + 1.0f,
+	CGSize leftDistanceStringSize = [leftDistanceString barz_sizeWithFont:font];
+	[leftDistanceString barz_drawInRect:CGRectMake(CGRectGetMinX(self.superRect) + 1.0f,
 											  floorf(CGRectGetMidY(adjustedMainRect)) - leftDistanceStringSize.height,
 											  leftDistanceStringSize.width,
 											  leftDistanceStringSize.height)
@@ -131,8 +132,8 @@
 		CGContextStrokePath(context);
 	}
 	NSString *rightDistanceString = (showAntialiasingWarning) ? [NSString stringWithFormat:@"%.1f", CGRectGetMaxX(self.superRect) - CGRectGetMaxX(adjustedMainRect) - 0.5] : [NSString stringWithFormat:@"%.0f", CGRectGetMaxX(self.superRect) - CGRectGetMaxX(adjustedMainRect) - 0.5];
-	CGSize rightDistanceStringSize = [rightDistanceString sizeWithFont:font];
-	[rightDistanceString drawInRect:CGRectMake(CGRectGetMaxX(self.superRect) - rightDistanceStringSize.width - 1.0f,
+	CGSize rightDistanceStringSize = [rightDistanceString barz_sizeWithFont:font];
+	[rightDistanceString barz_drawInRect:CGRectMake(CGRectGetMaxX(self.superRect) - rightDistanceStringSize.width - 1.0f,
 											   floorf(CGRectGetMidY(adjustedMainRect)) - 0.5f - rightDistanceStringSize.height,
 											   rightDistanceStringSize.width,
 											   rightDistanceStringSize.height)
@@ -143,8 +144,8 @@
 	CGContextAddLineToPoint(context, floorf(CGRectGetMidX(adjustedMainRect)) + 0.5f, CGRectGetMinY(adjustedMainRect));
 	CGContextStrokePath(context);
 	NSString *topDistanceString = (showAntialiasingWarning) ? [NSString stringWithFormat:@"%.1f",  mainRectOffset.origin.y] : [NSString stringWithFormat:@"%.0f", mainRectOffset.origin.y];
-	CGSize topDistanceStringSize = [topDistanceString sizeWithFont:font];
-	[topDistanceString drawInRect:CGRectMake(floorf(CGRectGetMidX(adjustedMainRect)) + 3.0f,
+	CGSize topDistanceStringSize = [topDistanceString barz_sizeWithFont:font];
+	[topDistanceString barz_drawInRect:CGRectMake(floorf(CGRectGetMidX(adjustedMainRect)) + 3.0f,
 											   floorf(CGRectGetMinY(self.superRect)),
 											   topDistanceStringSize.width,
 											   topDistanceStringSize.height)
@@ -158,8 +159,8 @@
 		CGContextStrokePath(context);
 	}
 	NSString *bottomDistanceString = (showAntialiasingWarning) ? [NSString stringWithFormat:@"%.1f",  CGRectGetMaxY(self.superRect) - CGRectGetMaxY(mainRectOffset)] : [NSString stringWithFormat:@"%.0f", self.superRect.size.height - mainRectOffset.origin.y - mainRectOffset.size.height];
-	CGSize bottomDistanceStringSize = [bottomDistanceString sizeWithFont:font];
-	[bottomDistanceString drawInRect:CGRectMake(floorf(CGRectGetMidX(adjustedMainRect)) + 3.0f,
+	CGSize bottomDistanceStringSize = [bottomDistanceString barz_sizeWithFont:font];
+	[bottomDistanceString barz_drawInRect:CGRectMake(floorf(CGRectGetMidX(adjustedMainRect)) + 3.0f,
 												floorf(CGRectGetMaxY(self.superRect)) - bottomDistanceStringSize.height - 1.0f,
 												bottomDistanceStringSize.width,
 												bottomDistanceStringSize.height)
@@ -181,7 +182,7 @@
 	NSString *touchPontLabelString = [NSString stringWithFormat:@"%.0f, %.0f", touchPoint.x, touchPoint.y];
 	self.touchPointLabel.text = touchPontLabelString;
 
-	CGSize stringSize = [touchPontLabelString sizeWithFont:self.touchPointLabel.font];
+	CGSize stringSize = [touchPontLabelString barz_sizeWithFont:self.touchPointLabel.font];
 	CGRect frame = CGRectMake(touchPoint.x - floorf(stringSize.width / 2.0f) - 5.0f,
 							  touchPoint.y - stringSize.height - labelDistance,
 							  stringSize.width + 11.0f,

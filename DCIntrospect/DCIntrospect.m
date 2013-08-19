@@ -1445,7 +1445,11 @@ id UITextInputTraits_valueForKey(id self, SEL _cmd, NSString *key)
 			[objectString appendFormat:@"    autoresizingMask: %@\n", [self describeProperty:@"autoresizingMask" value:[NSNumber numberWithInt:view.autoresizingMask]]];
 			[objectString appendFormat:@"    autoresizesSubviews: %@\n", (view.autoresizesSubviews) ? @"YES" : @"NO"];
 			[objectString appendFormat:@"    contentMode: %@ | ", [self describeProperty:@"contentMode" value:[NSNumber numberWithInt:view.contentMode]]];
+            // TODO: Hsoi 2013-08-19 - For now, we'll keep contentStretch in, but eventually we'll need to remove this.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 			[objectString appendFormat:@"contentStretch: %@\n", NSStringFromCGRect(view.contentStretch)];
+#pragma GCC diagnostic pop
 			[objectString appendFormat:@"    backgroundColor: %@\n", [self describeColor:view.backgroundColor]];
 			[objectString appendFormat:@"    alpha: %.2f | ", view.alpha];
 			[objectString appendFormat:@"opaque: %@ | ", (view.opaque) ? @"YES" : @"NO"];
